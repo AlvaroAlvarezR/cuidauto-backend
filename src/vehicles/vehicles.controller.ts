@@ -26,8 +26,7 @@ export class VehiclesController {
   @ApiOperation({ summary: 'Registrar un nuevo vehículo' })
   @ApiResponse({ status: 201, description: 'Vehículo creado correctamente' })
   create(@Body() createVehicleDto: CreateVehicleDto, @Request() req: any) {
-    console.log(req.user)
-    return this.vehiclesService.create(createVehicleDto, req.user.userId);
+    return this.vehiclesService.create(createVehicleDto, req.user.id);
   }
 
   // @Get()

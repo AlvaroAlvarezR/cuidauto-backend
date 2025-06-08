@@ -5,6 +5,7 @@ import { Vehicle } from './entities/vehicle.entity';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UsersService } from '../users/users.service';
 import { Maintenance } from 'src/maintenances/entities/maintenance.entity';
+import { UserDto } from 'src/users/dto/user.dto';
 
 @Injectable()
 export class VehiclesService {
@@ -17,9 +18,10 @@ export class VehiclesService {
   async create(dto: CreateVehicleDto, userId: number) {
     const vehicle = this.repo.create({
       ...dto,
-      user: { id: userId }, // TypeORM infiere la relación
+      user: { id: userId } as any,
     });
-    return vehicle;
+
+    return this.repo.save(vehicle);
   }
 
   findOne(id: number) {
