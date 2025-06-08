@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Maintenance } from './entities/maintenance.entity';
 import { CreateMaintenanceDto } from './dto/create-maintenance.dto';
 import { Vehicle } from '../vehicles/entities/vehicle.entity';
+import { MAINTENANCE_TYPE_TRANSLATIONS } from '../common/constants/maintenance-types';
 
 @Injectable()
 export class MaintenancesService {
@@ -11,6 +12,7 @@ export class MaintenancesService {
     @InjectRepository(Maintenance) private repo: Repository<Maintenance>,
     @InjectRepository(Vehicle) private vehicleRepo: Repository<Vehicle>
   ) { }
+
 
   async create(vehicleId: number, dto: CreateMaintenanceDto) {
     const maintenance = this.repo.create({
@@ -31,6 +33,7 @@ export class MaintenancesService {
 
     const dataWithStatus = items.map((m) => ({
       ...m,
+      typeLabel: MAINTENANCE_TYPE_TRANSLATIONS[m.type],
       status: this.calculateMaintenanceStatus(m, m.vehicle.mileage),
     }));
 
