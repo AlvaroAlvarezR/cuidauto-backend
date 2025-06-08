@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Vehicle } from './entities/vehicle.entity';
@@ -6,6 +6,7 @@ import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UsersService } from '../users/users.service';
 import { Maintenance } from 'src/maintenances/entities/maintenance.entity';
 import { UserDto } from 'src/users/dto/user.dto';
+import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 
 @Injectable()
 export class VehiclesService {
@@ -22,6 +23,17 @@ export class VehiclesService {
     });
 
     return this.repo.save(vehicle);
+  }
+
+  async update(id: number, dto: UpdateVehicleDto, userId: number) {
+    const vehicle = await this.repo.findOne({ where: { id, user: { id: userId } } });
+
+    if (!vehicle) {
+      throw new NotFoundException('Vehículo no encontrado o no autorizado');
+    }
+
+    const updated = this.repo.merge(vehicle, dto);
+    return this.repo.save(updated);
   }
 
   findOne(id: number) {
