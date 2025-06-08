@@ -15,12 +15,11 @@ export class VehiclesService {
   ) { }
 
   async create(dto: CreateVehicleDto, userId: number) {
-    console.log(userId);
     const vehicle = this.repo.create({
       ...dto,
       user: { id: userId }, // TypeORM infiere la relación
     });
-    return this.repo.save(vehicle);
+    return vehicle;
   }
 
   findOne(id: number) {
