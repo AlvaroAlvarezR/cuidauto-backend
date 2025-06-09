@@ -33,7 +33,7 @@ export class MaintenancesService {
 
     const dataWithStatus = items.map((m) => ({
       ...m,
-      typeLabel: MAINTENANCE_TYPE_TRANSLATIONS[m.type],
+      type: MAINTENANCE_TYPE_TRANSLATIONS[m.type],
       status: this.calculateMaintenanceStatus(m, m.vehicle.mileage),
     }));
 
