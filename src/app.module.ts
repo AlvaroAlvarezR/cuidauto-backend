@@ -12,13 +12,19 @@ import { MaintenanceStatusModule } from './maintenance-status/maintenance-status
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    // TypeOrmModule.forRoot({
+    //   type: 'postgres',
+    //   host: 'localhost',
+    //   port: 5432,
+    //   username: 'postgres',
+    //   password: 'abcd.1234',
+    //   database: 'cuidauto',
+    //   autoLoadEntities: true,
+    //   synchronize: true,
+    // }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'abcd.1234',
-      database: 'cuidauto',
+      type: 'sqlite',
+      database: 'cuidauto.db', // Esto crea el archivo local
       autoLoadEntities: true,
       synchronize: true,
     }),
